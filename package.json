@@ -9,6 +9,11 @@
     "categories": [
         "Programming Languages"
     ],
+    "publisher": "vanutp",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/vanutp/vscode-python-bytecode.git"
+    },
     "contributes": {
         "languages": [{
             "id": "pyasm",
