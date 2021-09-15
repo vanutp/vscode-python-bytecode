@@ -1,0 +1,25 @@
+{
+    "name": "python-bytecode",
+    "displayName": "Python bytecode support",
+    "description": "",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "pyasm",
+            "aliases": ["Python bytecode", "pyasm"],
+            "extensions": [".pyasm"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "pyasm",
+            "scopeName": "source.pyasm",
+            "path": "./syntaxes/pyasm.tmLanguage.json"
+        }]
+    }
+}

@@ -1,0 +1,94 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Python bytecode",
+	"patterns": [
+		{
+			"include": "#line"
+		},
+		{
+			"include": "#function"
+		}
+	],
+	"repository": {
+		"strings_escape": {
+			"name": "constant.character.escape.pyasm",
+			"match": "\\\\."
+		},
+		"strings_single": {
+			"name": "string.pyasm",
+			"begin": "'",
+			"end": "'",
+			"patterns": [{"include": "#strings_escape"}]
+		},
+		"strings_double": {
+			"name": "string.pyasm",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{"include": "#strings_escape"}]
+		},
+		"readable_params_nonstring": {
+			"name": "variable.pyasm",
+			"match": "(?<=\\()[\\w_ ]+(?=\\))"
+		},
+		"readable_params_jump": {
+			"match": "(to )(\\d+)",
+			"captures": {
+				"1": {
+					"name": "keyword.control.jump_to.pyasm"
+				},
+				"2": {
+					"name": "param"
+				}
+			}
+		},
+		"readable_params": {
+			"begin": "\\(",
+			"end": "\\)",
+			"patterns": [
+				{"include": "#strings_single"},
+				{"include": "#strings_double"},
+				{"include": "#readable_params_jump"},
+				{"include": "#readable_params_nonstring"}
+			]
+		},
+		"line": {
+			"begin": "(?x)^\\s+ (\\d+)? \\s+ (>>)? \\s+ (\\d+) \\s ([A-Z_]+)",
+			"end": "$",
+			"beginCaptures": {
+				"1": {
+					"name": ""
+				},
+				"2": {
+					"name": "keyword.control.jump_to_target.pyasm"
+				},
+				"3": {
+					"name": ""
+				},
+				"4": {
+					"name": "keyword.operation.pyasm"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#readable_params"
+				},
+				{
+					"name": "parameter.pyasm",
+					"match": "(\\d+)(?=\\s(?=\\()|$)"
+				}
+			]
+		},
+		"function": {
+			"match": "^(Disassembly of )([[:alpha:]_]\\w*):$",
+			"captures": {
+				"1": {
+					"name": "keyword.function.pyasm"
+				},
+				"2": {
+					"name": "entity.name.function.pyasm"
+				}
+			}
+		}
+	},
+	"scopeName": "source.pyasm"
+}
